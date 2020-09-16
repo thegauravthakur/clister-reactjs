@@ -1,7 +1,8 @@
 import React, {useState} from "react";
-import {Grid, Card, CardContent, TextField, Typography, Avatar, Button, Link} from "@material-ui/core";
+import {Grid, Card, CardContent, TextField, Typography, Avatar, Button, Link, LinearProgress} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import app from "../firebase/base";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,43 +26,57 @@ const useStyles = makeStyles((theme) => ({
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const onSubmitHandler = (event) => {
+    const [loading, setLoading] = useState(false);
+
+    const onSubmitHandler = async (event) => {
         event.preventDefault();
-        console.log(email, password)
+        setLoading(true);
+        await app.auth().signInWithEmailAndPassword(email, password).then(() => {
+            setLoading(false);
+            alert('logged in')
+        }).catch(e => {
+            setLoading(false);
+            alert(e);
+        });
+
     }
     const classes = useStyles();
     return (
-        <Grid container direction="column" justify="flex-start" alignItems="center">
-            <Card className={classes.root}>
-                <CardContent className={classes.card}>
-                    <Avatar className={classes.icon}>
-                        <LockOutlinedIcon/>
-                    </Avatar>
-                    <Typography variant='h5' className={classes.title}>Login</Typography>
-                    <form onSubmit={onSubmitHandler}>
-                        <TextField type='email' required autoFocus margin='normal' fullWidth label='Email Address'
-                                   variant='outlined' onChange={(e) => setEmail(e.target.value)}/>
-                        <TextField required margin='normal' fullWidth label='Password' variant='outlined'
-                                   type='password' onChange={(e) => setPassword(e.target.value)}/>
-                        <Button type='submit' className={classes.submit} fullWidth variant="contained" color="primary">
-                            Sign In
-                        </Button>
-                        <Grid container justify='space-between'>
-                            <Grid item>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
+        <div>
+            {loading ? <LinearProgress/> : null}
+            <Grid container direction="column" justify="flex-start" alignItems="center">
+                <Card className={classes.root}>
+                    <CardContent className={classes.card}>
+                        <Avatar className={classes.icon}>
+                            <LockOutlinedIcon/>
+                        </Avatar>
+                        <Typography variant='h5' className={classes.title}>Login</Typography>
+                        <form onSubmit={onSubmitHandler}>
+                            <TextField type='email' required autoFocus margin='normal' fullWidth label='Email Address'
+                                       variant='outlined' onChange={(e) => setEmail(e.target.value)}/>
+                            <TextField required margin='normal' fullWidth label='Password' variant='outlined'
+                                       type='password' onChange={(e) => setPassword(e.target.value)}/>
+                            <Button disabled={loading} type='submit' className={classes.submit} fullWidth
+                                    variant="contained" color="primary">
+                                Sign In
+                            </Button>
+                            <Grid container justify='space-between'>
+                                <Grid item>
+                                    <Link href="#" variant="body2">
+                                        Forgot password?
+                                    </Link>
+                                </Grid>
+                                <Grid item>
+                                    <Link href="#" variant="body2">
+                                        {"Don't have an account? Sign Up"}
+                                    </Link>
+                                </Grid>
                             </Grid>
-                            <Grid item>
-                                <Link href="#" variant="body2">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </form>
-                </CardContent>
-            </Card>
-        </Grid>
+                        </form>
+                    </CardContent>
+                </Card>
+            </Grid>
+        </div>
     )
 }
 
