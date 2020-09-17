@@ -1,8 +1,21 @@
-import React, {useState} from "react";
-import {Grid, Card, CardContent, TextField, Typography, Avatar, Button, Link, LinearProgress} from "@material-ui/core";
+import React, {useContext, useState} from "react";
+import {
+    Grid,
+    Card,
+    CardContent,
+    TextField,
+    Typography,
+    Avatar,
+    Button,
+    Link,
+    LinearProgress,
+} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import app from "../firebase/base";
+import SnackBarBottom from "./SnackBarBottom";
+import {Redirect} from "react-router-dom";
+import {AuthContext} from "./Provider";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,27 +36,45 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const LoginPage = () => {
+const LoginPage = ({history}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-
-    const onSubmitHandler = async (event) => {
+    const [open, setOpen] = useState({
+        isOpen: false,
+        message: '',
+        type: '',
+    });
+    const onSubmitHandler = event => {
         event.preventDefault();
         setLoading(true);
-        await app.auth().signInWithEmailAndPassword(email, password).then(() => {
+        app.auth().signInWithEmailAndPassword(email, password).then(() => {
             setLoading(false);
-            alert('logged in')
+            history.push('/')
         }).catch(e => {
             setLoading(false);
-            alert(e);
+            setOpen({
+                isOpen: true,
+                message: e.message,
+                type: 'error'
+            });
         });
 
     }
+
+
+    const handleClose = () => {
+        setOpen({
+            isOpen: false,
+        });
+    };
     const classes = useStyles();
+    const user = useContext(AuthContext);
+    if (user) return <Redirect to='/'/>
     return (
         <div>
             {loading ? <LinearProgress/> : null}
+            <SnackBarBottom open={open.isOpen} type={open.type} handleClose={handleClose} message={open.message}/>
             <Grid container direction="column" justify="flex-start" alignItems="center">
                 <Card className={classes.root}>
                     <CardContent className={classes.card}>
