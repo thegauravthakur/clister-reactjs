@@ -13,9 +13,9 @@ import {
 import {makeStyles} from "@material-ui/core/styles";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import app from "../firebase/base";
-import SnackBarBottom from "./SnackBarBottom";
+import SnackBarBottom from "../components/SnackBarBottom";
 import {Redirect} from "react-router-dom";
-import {AuthContext} from "./Provider";
+import {AuthContext} from "../context/Provider";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -50,7 +50,7 @@ const LoginPage = ({history}) => {
         setLoading(true);
         app.auth().signInWithEmailAndPassword(email, password).then(() => {
             setLoading(false);
-            history.push('/')
+            history.push('/');
         }).catch(e => {
             setLoading(false);
             setOpen({
@@ -61,16 +61,15 @@ const LoginPage = ({history}) => {
         });
 
     }
-
-
     const handleClose = () => {
         setOpen({
             isOpen: false,
         });
     };
     const classes = useStyles();
-    const user = useContext(AuthContext);
-    if (user) return <Redirect to='/'/>
+    const {currentUser} = useContext(AuthContext);
+    if (currentUser)  return <Redirect to="/"/>;
+
     return (
         <div>
             {loading ? <LinearProgress/> : null}
