@@ -1,19 +1,22 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
+import {ThemeContext} from "../context/ThemeProvider";
 
-const useStyle = makeStyles((theme) => ({
-    title: {
-        color: 'teal',
-        margin: '20px 0 20px 0',
-        fontFamily: ['Fredoka One', 'cursive']
-    }
-}))
+
 
 const Title = () => {
+    const data = useContext(ThemeContext)
+    const useStyle = makeStyles((theme) => ({
+        title: {
+            color: data.theme === 'dark' ? 'white' : 'teal',
+            margin: '20px 0 20px 0',
+            fontFamily: ['Fredoka One', 'cursive']
+        }
+    }))
     const classes = useStyle();
     return (
-        <Typography className={classes.title} align='center' variant='h3' color='teal'>
+        <Typography className={classes.title} align='center' variant='h3'>
             CLister
         </Typography>
     )

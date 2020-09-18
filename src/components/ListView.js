@@ -29,9 +29,7 @@ const ListView = ({data}) => {
         }, err => {
             console.log(`Encountered error: ${err}`);
         });
-        console.log(list)
 
-        // return () => console.log('cleaned')
     }, [])
 
     return (

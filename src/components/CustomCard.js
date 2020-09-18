@@ -1,31 +1,31 @@
-import React, {useEffect} from "react";
+import React, {useContext, useEffect} from "react";
 import {Paper, Grid, Typography} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/core/styles";
+import {ThemeContext} from "../context/ThemeProvider";
 
-const useStyle = makeStyles((theme => ({
-    root: {
-        paddingTop: theme.spacing(2),
-        paddingBottom: theme.spacing(2),
-        marginBottom: theme.spacing(2),
-        [theme.breakpoints.down('sm')]: {
-            marginLeft: theme.spacing(1),
-            marginRight: theme.spacing(1)
-        }
-    },
-    message: {
-        color: 'teal'
-    },
-    index: {
-        fontWeight: 'bold'
-    }
 
-})))
 
 const CustomCard = ({body, index, onDeleteHandler}) => {
-    useEffect(()=>{
-        console.log(body, index)
-    })
+    const data = useContext(ThemeContext);
+    const useStyle = makeStyles((theme => ({
+        root: {
+            paddingTop: theme.spacing(2),
+            paddingBottom: theme.spacing(2),
+            marginBottom: theme.spacing(2),
+            [theme.breakpoints.down('sm')]: {
+                marginLeft: theme.spacing(1),
+                marginRight: theme.spacing(1)
+            }
+        },
+        message: {
+            color: data.theme === 'dark' ? 'white' : 'teal',
+        },
+        index: {
+            fontWeight: 'bold'
+        }
+
+    })))
     const classes = useStyle();
     return (
         <Paper className={classes.root} elevation={3}>
