@@ -15,8 +15,9 @@ const App = () => {
     const theme = createMuiTheme(
         {
             palette: {
-                type: data.theme
-            }
+                type: data.theme,
+            },
+
         }
     )
     return (

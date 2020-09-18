@@ -16,27 +16,26 @@ import app from "../firebase/base";
 import SnackBarBottom from "../components/SnackBarBottom";
 import {Redirect} from "react-router-dom";
 import {AuthContext} from "../context/Provider";
+import Paper from "@material-ui/core/Paper";
+import {ThemeContext} from "../context/ThemeProvider";
+import Box from "@material-ui/core/Box";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        marginTop: theme.spacing(8),
-        maxWidth: '400px'
-    },
-    card: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
-    },
-    icon: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2)
-    }
-}));
+function Copyright() {
+    return (
+        <Typography variant="body2" color="textSecondary" align="center">
+            {'Copyright © '}
+            <Link color="inherit" href="https://gauravthakur.me/">
+                CLister
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
 
 const LoginPage = ({history}) => {
+
+    const data = useContext(ThemeContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -45,6 +44,30 @@ const LoginPage = ({history}) => {
         message: '',
         type: '',
     });
+    const useStyles = makeStyles((theme) => ({
+        paper: {
+            minHeight: '100vh',
+            backgroundColor: data.theme === 'dark' ? 'black' : 'white',
+        },
+        root: {
+            marginTop: theme.spacing(8),
+            maxWidth: '400px'
+        },
+        card: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            backgroundColor: data.theme === 'dark' ? 'black' : 'white',
+            border: data.theme === 'dark' ? '1px solid teal' : null,
+        },
+        icon: {
+            margin: theme.spacing(1),
+            backgroundColor: theme.palette.secondary.main,
+        },
+        submit: {
+            margin: theme.spacing(3, 0, 2)
+        }
+    }));
     const onSubmitHandler = event => {
         event.preventDefault();
         setLoading(true);
@@ -68,10 +91,10 @@ const LoginPage = ({history}) => {
     };
     const classes = useStyles();
     const {currentUser} = useContext(AuthContext);
-    if (currentUser)  return <Redirect to="/"/>;
+    if (currentUser) return <Redirect to="/"/>;
 
     return (
-        <div>
+        <Paper className={classes.paper}>
             {loading ? <LinearProgress/> : null}
             <SnackBarBottom open={open.isOpen} type={open.type} handleClose={handleClose} message={open.message}/>
             <Grid container direction="column" justify="flex-start" alignItems="center">
@@ -82,9 +105,9 @@ const LoginPage = ({history}) => {
                         </Avatar>
                         <Typography variant='h5' className={classes.title}>Login</Typography>
                         <form onSubmit={onSubmitHandler}>
-                            <TextField type='email' required autoFocus margin='normal' fullWidth label='Email Address'
+                            <TextField autoComplete='email' type='email' required autoFocus margin='normal' fullWidth label='Email Address'
                                        variant='outlined' onChange={(e) => setEmail(e.target.value)}/>
-                            <TextField required margin='normal' fullWidth label='Password' variant='outlined'
+                            <TextField autoComplete="current-password" required margin='normal' fullWidth label='Password' variant='outlined'
                                        type='password' onChange={(e) => setPassword(e.target.value)}/>
                             <Button disabled={loading} type='submit' className={classes.submit} fullWidth
                                     variant="contained" color="primary">
@@ -106,7 +129,10 @@ const LoginPage = ({history}) => {
                     </CardContent>
                 </Card>
             </Grid>
-        </div>
+            <Box mt={8}>
+                <Copyright/>
+            </Box>
+        </Paper>
     )
 }
 
