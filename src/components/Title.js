@@ -5,7 +5,8 @@ import {makeStyles} from "@material-ui/core/styles";
 const useStyle = makeStyles((theme) => ({
     title: {
         color: 'teal',
-        margin: '20px 0 20px 0'
+        margin: '20px 0 20px 0',
+        fontFamily: ['Fredoka One', 'cursive']
     }
 }))
 
