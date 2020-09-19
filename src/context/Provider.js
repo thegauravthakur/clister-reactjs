@@ -13,7 +13,11 @@ export const AuthProvider = ({children}) => {
     }, []);
     if (pending) {
         return (
-            <LinearProgress color="secondary" />
+            <div style={{backgroundColor: 'black', minHeight: '100vh'}}>
+                <LinearProgress  color="secondary" />
+                <h1>hello</h1>
+            </div>
+
         )
     }
     return (

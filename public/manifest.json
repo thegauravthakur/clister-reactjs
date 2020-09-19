@@ -1,4 +1,5 @@
 {
+    "name": "CLister",
     "theme_color": "#225560",
     "background_color": "#225560",
     "display": "standalone",

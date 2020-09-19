@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const CustomAppBar = () => {
+const CustomAppBar = ({setOpen}) => {
     const {currentUser} = useContext(AuthContext);
     const data = useContext(ThemeContext);
     const classes = useStyles();
@@ -39,16 +39,16 @@ const CustomAppBar = () => {
     }
     return (
         <AppBar position="static" color={data.theme === 'dark' ? 'default' : 'primary'}>
-            <Toolbar>
-                <IconButton edge="start" className={classes.menuButton}
+            <Toolbar >
+                <IconButton onClick={() => setOpen(false)} edge="start" className={classes.menuButton}
                             color="inherit" aria-label="menu">
                     <MenuIcon/>
                 </IconButton>
                 <Typography variant="h6" className={classes.title}>
                     CLister
                 </Typography>
-                <IconButton  onClick={data.toggle}>
-                    {data.theme === 'dark' ? <Sun/> : <Moon className={classes.moon} />}
+                <IconButton onClick={data.toggle}>
+                    {data.theme === 'dark' ? <Sun/> : <Moon className={classes.moon}/>}
                 </IconButton>
                 {currentUser ? <Button onClick={logoutHandler} color="inherit">Logout</Button> :
                     <Button onClick={createAccountHandler} color="inherit">Create Account</Button>}

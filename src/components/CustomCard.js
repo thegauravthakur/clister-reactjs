@@ -1,10 +1,8 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext} from "react";
 import {Paper, Grid, Typography} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/core/styles";
 import {ThemeContext} from "../context/ThemeProvider";
-
-
 
 const CustomCard = ({body, index, onDeleteHandler}) => {
     const data = useContext(ThemeContext);

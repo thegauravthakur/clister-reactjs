@@ -95,7 +95,7 @@ const LoginPage = ({history}) => {
 
     return (
         <Paper className={classes.paper}>
-            {loading ? <LinearProgress/> : null}
+            {loading ? <LinearProgress style={{background: 'teal'}}/> : null}
             <SnackBarBottom open={open.isOpen} type={open.type} handleClose={handleClose} message={open.message}/>
             <Grid container direction="column" justify="flex-start" alignItems="center">
                 <Card className={classes.root}>
