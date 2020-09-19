@@ -4,23 +4,23 @@ import CustomCard from "./CustomCard";
 import app from "../firebase/base";
 import CustomInputField from "./CustomInputField";
 
-const ListView = ({data}) => {
+const ListView = ({listName}) => {
     const {currentUser} = useContext(AuthContext);
     const [list, setList] = useState([])
     const onFormSubmitHandler = (data) => {
         let temp = [...list, data]
         setList(temp)
-        app.firestore().collection(currentUser.uid).doc('tasks').set({task: temp})
+        app.firestore().collection(currentUser.uid).doc(`${listName}`).set({task: temp})
     }
 
     const onDeleteHandler = (index) => {
         let temp = [...list]
         temp.splice(index, 1)
         setList(temp)
-        app.firestore().collection(currentUser.uid).doc('tasks').set({task: temp})
+        app.firestore().collection(currentUser.uid).doc(`${listName}`).set({task: temp})
     }
     useEffect(() => {
-        const ref = app.firestore().collection(currentUser.uid).doc('tasks')
+        const ref = app.firestore().collection(currentUser.uid).doc(`${listName}`)
         ref.onSnapshot(docSnapshot => {
             if (docSnapshot.exists) {
                 let data = docSnapshot.data()
@@ -30,7 +30,7 @@ const ListView = ({data}) => {
             console.log(`Encountered error: ${err}`);
         });
 
-    }, [])
+    }, [listName])
 
     return (
         <div>

@@ -5,13 +5,16 @@ import {BrowserRouter} from "react-router-dom";
 import {AuthProvider} from "./context/Provider";
 import * as serviceWorker from './serviceWorker';
 import {MyThemeProvider} from "./context/ThemeProvider";
+import {AppBarContext, AppBarProvider} from "./context/AppBarProvider";
 
 
 ReactDOM.render(
     <BrowserRouter>
         <AuthProvider>
             <MyThemeProvider>
-                <App/>
+                <AppBarProvider>
+                    <App/>
+                </AppBarProvider>
             </MyThemeProvider>
         </AuthProvider>
     </BrowserRouter>,

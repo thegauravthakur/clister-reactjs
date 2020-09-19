@@ -73,7 +73,7 @@ const LoginPage = ({history}) => {
         setLoading(true);
         app.auth().signInWithEmailAndPassword(email, password).then(() => {
             setLoading(false);
-            history.push('/');
+            history.push('/tasks/default');
         }).catch(e => {
             setLoading(false);
             setOpen({
@@ -91,7 +91,7 @@ const LoginPage = ({history}) => {
     };
     const classes = useStyles();
     const {currentUser} = useContext(AuthContext);
-    if (currentUser) return <Redirect to="/"/>;
+    if (currentUser) return <Redirect to="/tasks/default"/>;
 
     return (
         <Paper className={classes.paper}>

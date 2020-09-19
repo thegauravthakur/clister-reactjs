@@ -5,7 +5,7 @@ import {ThemeContext} from "../context/ThemeProvider";
 
 
 
-const Title = () => {
+const Title = ({listName}) => {
     const data = useContext(ThemeContext)
     const useStyle = makeStyles((theme) => ({
         title: {
@@ -17,7 +17,7 @@ const Title = () => {
     const classes = useStyle();
     return (
         <Typography className={classes.title} align='center' variant='h3'>
-            CLister
+            {listName}
         </Typography>
     )
 }

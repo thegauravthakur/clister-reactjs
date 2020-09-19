@@ -1,7 +1,7 @@
 import React, {useContext, useState} from "react";
 import LoginPage from "./pages/LoginPage";
-import {Route, Switch} from "react-router-dom";
-import HomePage from "./pages/HomePage";
+import {Route, Switch, Redirect} from "react-router-dom";
+import TasksPage from "./pages/TasksPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import CustomAppBar from "./components/CustomAppBar";
 import Paper from "@material-ui/core/Paper";
@@ -26,10 +26,13 @@ const App = () => {
         <ThemeProvider theme={theme}>
             <Paper>
                 <CustomAppBar setOpen={setOpen}/>
-                <LeftDrawer open={open} setOpen={setOpen} />
+                <LeftDrawer open={open} setOpen={setOpen}/>
                 <Switch>
-                    <ProtectedRoute exact path='/' component={HomePage}/>
-                    <Route path='/login' component={LoginPage}/>
+                    <Route exact path='/login' component={LoginPage}/>
+                    <ProtectedRoute exact path='/tasks/:listName' component={TasksPage}/>
+                    <ProtectedRoute exact path="/">
+                        <Redirect to="/tasks/default"/>
+                    </ProtectedRoute>
                 </Switch>
             </Paper>
         </ThemeProvider>
