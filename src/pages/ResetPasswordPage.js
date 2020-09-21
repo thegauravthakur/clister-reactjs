@@ -34,7 +34,7 @@ function Copyright() {
     );
 }
 
-const LoginPage = ({history}) => {
+const ResetPasswordPage = ({history}) => {
     const height = use100vh()
     const data = useContext(ThemeContext);
     const [email, setEmail] = useState('');
@@ -78,9 +78,10 @@ const LoginPage = ({history}) => {
     const onSubmitHandler = event => {
         event.preventDefault();
         setLoading(true);
-        app.auth().signInWithEmailAndPassword(email, password).then(() => {
+        app.auth().sendPasswordResetEmail(email).then(() => {
             setLoading(false);
-            history.push('/tasks/default');
+            alert("email send to ", email)
+            history.push('/login')
         }).catch(e => {
             setLoading(false);
             setOpen({
@@ -88,7 +89,7 @@ const LoginPage = ({history}) => {
                 message: e.message,
                 type: 'error'
             });
-        });
+        })
 
     }
     const handleClose = () => {
@@ -110,24 +111,21 @@ const LoginPage = ({history}) => {
                         <Avatar className={classes.icon}>
                             <LockOutlinedIcon/>
                         </Avatar>
-                        <Typography variant='h5' className={classes.title}>Login</Typography>
+                        <Typography variant='h5' className={classes.title}>Reset Password</Typography>
                         <form onSubmit={onSubmitHandler}>
                             <TextField autoComplete='email' type='email' required autoFocus margin='normal'
                                        fullWidth label='Email Address'
                                        variant='outlined' onChange={(e) => setEmail(e.target.value)}/>
-                            <TextField autoComplete="current-password" required margin='normal' fullWidth
-                                       label='Password' variant='outlined'
-                                       type='password' onChange={(e) => setPassword(e.target.value)}/>
                             <Button disabled={loading} type='submit' className={classes.submit} fullWidth
                                     variant="contained" color="primary">
-                                Sign In
+                                Change Password
                             </Button>
                             <Grid container justify='space-between'>
                                 <Grid item>
                                     <Link onClick={() => {
-                                        history.push("/reset/password");
+                                        history.push("/login")
                                     }} href="#" variant="body2">
-                                        Forgot password?
+                                        Remember Password?
                                     </Link>
                                 </Grid>
                                 <Grid item>
@@ -147,4 +145,4 @@ const LoginPage = ({history}) => {
     )
 }
 
-export default LoginPage;
+export default ResetPasswordPage;

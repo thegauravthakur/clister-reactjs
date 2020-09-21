@@ -9,6 +9,7 @@ import {createMuiTheme, ThemeProvider} from "@material-ui/core";
 // import {ThemeContext} from "./context/ThemeContext";
 import {ThemeContext} from "./context/ThemeProvider";
 import LeftDrawer from "./components/LeftDrawer";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
                 <LeftDrawer open={open} setOpen={setOpen}/>
                 <Switch>
                     <Route exact path='/login' component={LoginPage}/>
+                    <Route exact path='/reset/password' component={ResetPasswordPage}/>
                     <ProtectedRoute exact path='/tasks/:listName' component={TasksPage}/>
                     <ProtectedRoute exact path="/">
                         <Redirect to="/tasks/default"/>
