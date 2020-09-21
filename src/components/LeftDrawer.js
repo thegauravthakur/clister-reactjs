@@ -17,9 +17,11 @@ import {useHistory} from "react-router-dom";
 import app from "../firebase/base";
 import {AuthContext} from "../context/Provider";
 import CustomListItem from "./CustomListItem";
+import {CurrentListTileContext} from "../context/CurrentListTileProvider";
 
 const LeftDrawer = ({open, setOpen}) => {
     const [list, setList] = useState([]);
+    const currentListTile = useContext(CurrentListTileContext);
     const history = useHistory();
     const [dopen, setDopen] = useState(false);
     const {currentUser} = useContext(AuthContext);
@@ -27,18 +29,40 @@ const LeftDrawer = ({open, setOpen}) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
-
         setOpen(false);
     };
     const [message, setMessage] = useState('');
     useEffect(() => {
-        if (currentUser) {
+        if(currentUser){
+            let temp = [];
             const ref = app.firestore().collection(currentUser.uid).get();
-            ref.then((data) => setList(data.docs))
+            ref.then((data) => data.docs.forEach((d) => temp.push(d['id']))).then(() => {
+                setList(temp);
+                console.log(list)
+            })
         }
 
-
     }, [currentUser])
+
+    const onDeleteHandler = (documentName) => {
+        if (documentName === '') alert('document empty');
+        else {
+            let temp = [...list];
+            let index = temp.indexOf(documentName);
+            temp.splice(index, 1);
+            setList(temp);
+            console.log('document name', documentName);
+            console.log('user uid', currentUser.uid);
+            app.firestore().collection(currentUser.uid).doc(documentName).delete().then(function () {
+                console.log("Document successfully deleted!");
+            }).catch(function (error) {
+                console.error("Error removing document: ", error);
+            });
+            history.push('/tasks/default')
+        }
+
+    }
+
     return (
         <div>
             <Dialog open={dopen} onClose={() => setDopen(false)} aria-labelledby="form-dialog-title">
@@ -59,18 +83,11 @@ const LeftDrawer = ({open, setOpen}) => {
                         Cancel
                     </Button>
                     <Button onClick={() => {
-                        let temp = [...list, {id: message}]
+                        let temp = [...list, message];
+                        app.firestore().collection(currentUser.uid).doc(message).set({task: []}, {merge: true}).then()
                         setList(temp);
-                        const ref = app.firestore().collection(currentUser.uid).doc(`${message}`)
-                        ref.onSnapshot(docSnapshot => {
-                            if (!docSnapshot.exists) {
-                                ref.set({task: []})
-                            }
-                        }, err => {
-                            console.log(`Encountered error: ${err}`);
-                        });
-
                         history.push(`/tasks/${message}`)
+                        currentListTile.toggle(message);
                         setOpen(false);
                         setDopen(false);
                     }} color="primary">
@@ -87,10 +104,15 @@ const LeftDrawer = ({open, setOpen}) => {
                         <ListItemIcon><DataUsageRoundedIcon/></ListItemIcon>
                         <ListItemText primary='Add List'/>
                     </ListItem>
-
-                    {list.map((data, index) =>
-                        <CustomListItem closeD={setOpen} key={data['id']} text={data['id']}/>
-                    )}
+                    <CustomListItem show={true} onDelete={(title) => onDeleteHandler(title)} closeD={setOpen}
+                                    key={'default'}
+                                    text={'default'}/>
+                    {list.map(data => {
+                        return data !== 'default' ?
+                            <CustomListItem show={false} onDelete={(title) => onDeleteHandler(title)}
+                                            closeD={setOpen} key={data}
+                                            text={data}/> : null
+                    })}
                 </List>
             </Drawer>
         </div>

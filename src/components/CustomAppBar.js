@@ -11,7 +11,6 @@ import {AuthContext} from "../context/Provider";
 import {ThemeContext} from "../context/ThemeProvider";
 import Sun from '@material-ui/icons/Brightness7Rounded';
 import Moon from '@material-ui/icons/Brightness2Rounded';
-import {AppBarContext} from "../context/AppBarProvider";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CustomAppBar = ({setOpen}) => {
-    const appBarData = useContext(AppBarContext);
     const {currentUser} = useContext(AuthContext);
     const data = useContext(ThemeContext);
     const classes = useStyles();

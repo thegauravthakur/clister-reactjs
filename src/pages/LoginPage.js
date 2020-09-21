@@ -19,6 +19,7 @@ import {AuthContext} from "../context/Provider";
 import Paper from "@material-ui/core/Paper";
 import {ThemeContext} from "../context/ThemeProvider";
 import Box from "@material-ui/core/Box";
+import {use100vh} from 'react-div-100vh'
 
 function Copyright() {
     return (
@@ -34,7 +35,7 @@ function Copyright() {
 }
 
 const LoginPage = ({history}) => {
-
+    const height = use100vh()
     const data = useContext(ThemeContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -46,7 +47,13 @@ const LoginPage = ({history}) => {
     });
     const useStyles = makeStyles((theme) => ({
         paper: {
-            minHeight: '100vh',
+            [theme.breakpoints.down('md')]: {
+                minHeight: height - 56,
+            },
+            [theme.breakpoints.up('sm')]: {
+                minHeight: height - 64,
+            },
+
             backgroundColor: data.theme === 'dark' ? 'black' : 'white',
         },
         root: {
@@ -105,9 +112,11 @@ const LoginPage = ({history}) => {
                         </Avatar>
                         <Typography variant='h5' className={classes.title}>Login</Typography>
                         <form onSubmit={onSubmitHandler}>
-                            <TextField autoComplete='email' type='email' required autoFocus margin='normal' fullWidth label='Email Address'
+                            <TextField autoComplete='email' type='email' required autoFocus margin='normal'
+                                       fullWidth label='Email Address'
                                        variant='outlined' onChange={(e) => setEmail(e.target.value)}/>
-                            <TextField autoComplete="current-password" required margin='normal' fullWidth label='Password' variant='outlined'
+                            <TextField autoComplete="current-password" required margin='normal' fullWidth
+                                       label='Password' variant='outlined'
                                        type='password' onChange={(e) => setPassword(e.target.value)}/>
                             <Button disabled={loading} type='submit' className={classes.submit} fullWidth
                                     variant="contained" color="primary">

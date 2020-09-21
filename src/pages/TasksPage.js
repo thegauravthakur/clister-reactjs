@@ -5,18 +5,30 @@ import ListView from "../components/ListView";
 import {makeStyles} from "@material-ui/core/styles";
 import {ThemeContext} from "../context/ThemeProvider";
 import {useParams, useHistory} from "react-router-dom";
-
+import {CurrentListTileContext} from "../context/CurrentListTileProvider";
+import { use100vh } from 'react-div-100vh'
 const TasksPage = () => {
+    const height = use100vh();
     const {listName} = useParams();
     const history = useHistory();
     const data = useContext(ThemeContext);
-    const useStyle = makeStyles(() => ({
+    const currentListTile = useContext(CurrentListTileContext);
+    const useStyle = makeStyles((theme) => ({
         paper: {
-            minHeight: '100vh',
+            [theme.breakpoints.down('md')]: {
+                minHeight: height - 56,
+            },
+            [theme.breakpoints.up('sm')]: {
+                minHeight: height - 64,
+            },
             backgroundColor: data.theme === 'dark' ? 'Black' : 'white',
         }
     }))
     const classes = useStyle();
+
+    useEffect(()=> {
+        currentListTile.toggle(listName);
+    })
 
     return (
         <Paper className={classes.paper}>
