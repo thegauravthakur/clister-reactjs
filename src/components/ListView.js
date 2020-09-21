@@ -3,14 +3,17 @@ import {AuthContext} from "../context/Provider";
 import CustomCard from "./CustomCard";
 import app from "../firebase/base";
 import CustomInputField from "./CustomInputField";
+import {LastRouteVisitedContext} from "../context/LastRouteVisited";
 
 const ListView = ({listName}) => {
     const {currentUser} = useContext(AuthContext);
     const [list, setList] = useState([])
+    const currentEditList = useContext(LastRouteVisitedContext);
     const onFormSubmitHandler = (data) => {
         let temp = [...list, data]
         setList(temp)
         app.firestore().collection(currentUser.uid).doc(`${listName}`).set({task: temp})
+        currentEditList.toggle(listName);
     }
 
     const onDeleteHandler = (index) => {
@@ -34,7 +37,7 @@ const ListView = ({listName}) => {
 
     return (
         <div>
-            <CustomInputField onSubmit={onFormSubmitHandler} />
+            <CustomInputField onSubmit={onFormSubmitHandler}/>
             {list.map((data, index) =>
                 <CustomCard key={data} index={index + 1} body={data} onDeleteHandler={onDeleteHandler}/>
             )}

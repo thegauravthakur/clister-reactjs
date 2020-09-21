@@ -10,7 +10,6 @@ import { use100vh } from 'react-div-100vh'
 const TasksPage = () => {
     const height = use100vh();
     const {listName} = useParams();
-    const history = useHistory();
     const data = useContext(ThemeContext);
     const currentListTile = useContext(CurrentListTileContext);
     const useStyle = makeStyles((theme) => ({

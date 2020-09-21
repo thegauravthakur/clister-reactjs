@@ -6,15 +6,18 @@ import {AuthProvider} from "./context/Provider";
 import * as serviceWorker from './serviceWorker';
 import {MyThemeProvider} from "./context/ThemeProvider";
 import {CustomListTileProvider} from "./context/CurrentListTileProvider";
+import {LastRouteVisitedProvider} from "./context/LastRouteVisited";
 
 
 ReactDOM.render(
     <BrowserRouter>
         <AuthProvider>
             <MyThemeProvider>
-                <CustomListTileProvider>
-                    <App/>
-                </CustomListTileProvider>
+                <LastRouteVisitedProvider>
+                    <CustomListTileProvider>
+                        <App/>
+                    </CustomListTileProvider>
+                </LastRouteVisitedProvider>
             </MyThemeProvider>
         </AuthProvider>
     </BrowserRouter>,

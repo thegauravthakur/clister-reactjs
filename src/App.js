@@ -10,6 +10,7 @@ import {createMuiTheme, ThemeProvider} from "@material-ui/core";
 import {ThemeContext} from "./context/ThemeProvider";
 import LeftDrawer from "./components/LeftDrawer";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import {LastRouteVisitedContext, LastRouteVisitedProvider} from "./context/LastRouteVisited";
 
 
 const App = () => {
@@ -24,20 +25,21 @@ const App = () => {
         }
     )
     return (
-        <ThemeProvider theme={theme}>
-            <Paper>
-                <CustomAppBar setOpen={setOpen}/>
-                <LeftDrawer open={open} setOpen={setOpen}/>
-                <Switch>
-                    <Route exact path='/login' component={LoginPage}/>
-                    <Route exact path='/reset/password' component={ResetPasswordPage}/>
-                    <ProtectedRoute exact path='/tasks/:listName' component={TasksPage}/>
-                    <ProtectedRoute exact path="/">
-                        <Redirect to="/tasks/default"/>
-                    </ProtectedRoute>
-                </Switch>
-            </Paper>
-        </ThemeProvider>
+
+            <ThemeProvider theme={theme}>
+                <Paper>
+                    <CustomAppBar setOpen={setOpen}/>
+                    <LeftDrawer open={open} setOpen={setOpen}/>
+                    <Switch>
+                        <Route exact path='/login' component={LoginPage}/>
+                        <Route exact path='/reset/password' component={ResetPasswordPage}/>
+                        <ProtectedRoute exact path='/tasks/:listName' component={TasksPage}/>
+                        <ProtectedRoute exact path="/">
+                            <Redirect to="/tasks/default"/>
+                        </ProtectedRoute>
+                    </Switch>
+                </Paper>
+            </ThemeProvider>
     )
 }
 

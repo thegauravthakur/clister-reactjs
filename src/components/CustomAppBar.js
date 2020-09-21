@@ -40,10 +40,10 @@ const CustomAppBar = ({setOpen}) => {
     return (
         <AppBar position="static" color={data.theme === 'dark' ? 'default' : 'primary'}>
             <Toolbar>
-                <IconButton onClick={() => setOpen(true)} edge="start" className={classes.menuButton}
-                            color="inherit" aria-label="menu">
+                {currentUser ? <IconButton onClick={() => setOpen(true)} edge="start" className={classes.menuButton}
+                                           color="inherit" aria-label="menu">
                     <MenuIcon/>
-                </IconButton>
+                </IconButton> : null}
                 <Typography variant="h6" className={classes.title}>
                     CLister
                 </Typography>
