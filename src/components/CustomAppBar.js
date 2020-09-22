@@ -44,7 +44,7 @@ const CustomAppBar = ({setOpen}) => {
                                            color="inherit" aria-label="menu">
                     <MenuIcon/>
                 </IconButton> : null}
-                <Typography variant="h6" className={classes.title}>
+                <Typography style={{cursor: 'pointer'}} variant="h6" className={classes.title}>
                     CLister
                 </Typography>
                 <IconButton onClick={data.toggle}>
