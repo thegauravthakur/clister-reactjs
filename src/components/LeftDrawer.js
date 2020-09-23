@@ -110,7 +110,7 @@ const LeftDrawer = ({open, setOpen}) => {
                         <ListItemText primary='Add List'/>
                     </ListItem>
                     <CustomListItem show={true} onDelete={(title) => onDeleteHandler(title)} closeD={setOpen}
-                                    key={'default'}
+                                    key={'xtvsr'}
                                     text={'default'}/>
                     {list.map(data => {
                         return data !== 'default' ?

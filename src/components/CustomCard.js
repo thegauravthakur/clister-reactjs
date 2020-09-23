@@ -3,8 +3,10 @@ import {Paper, Grid, Typography} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/core/styles";
 import {ThemeContext} from "../context/ThemeProvider";
+import IconButton from "@material-ui/core/IconButton";
+import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 
-const CustomCard = ({body, index, onDeleteHandler}) => {
+const CustomCard = ({onDeleteHandler, body, index, pprops}) => {
     const data = useContext(ThemeContext);
     const useStyle = makeStyles((theme => ({
         root: {
@@ -26,13 +28,14 @@ const CustomCard = ({body, index, onDeleteHandler}) => {
     })))
     const classes = useStyle();
     return (
-        <Paper className={classes.root} elevation={3}>
-            <Grid container direction="row">
+        <Paper {...pprops} className={classes.root} elevation={3}>
+            <Grid
+                container direction="row">
                 <Grid alignItems='center' justify='center' container xs={1} sm={1} item>
                     <Grid item>
-                        <Typography className={classes.index} color="primary">
-                            {index}
-                        </Typography>
+                        <IconButton color='primary' data-movable-handle size='small'>
+                            <DragIndicatorIcon/>
+                        </IconButton>
                     </Grid>
                 </Grid>
                 <Grid xs={10} sm={10} item>
@@ -42,7 +45,8 @@ const CustomCard = ({body, index, onDeleteHandler}) => {
                 </Grid>
                 <Grid alignItems='center' container justify='center' xs={1} sm={1} item>
                     <Grid item>
-                        <Delete onClick={() => onDeleteHandler(index - 1)} color={"primary"}/>
+                        <IconButton color='primary' size='small'
+                                    onClick={() => onDeleteHandler(index)}><Delete/></IconButton>
                     </Grid>
                 </Grid>
             </Grid>
