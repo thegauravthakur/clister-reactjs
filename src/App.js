@@ -1,7 +1,7 @@
 //external libraries
 import React, {useContext, useState} from "react";
 import {createMuiTheme, ThemeProvider, Paper} from "@material-ui/core";
-import {Route, Switch, Redirect} from "react-router-dom";
+import {Route, Switch, Redirect, useLocation} from "react-router-dom";
 //user made libraries
 import LoginPage from "./pages/LoginPage";
 import TasksPage from "./pages/TasksPage";
@@ -11,9 +11,11 @@ import {ThemeContext} from "./context/ThemeProvider";
 import LeftDrawer from "./components/LeftDrawer";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import PageNotFound from "./pages/PageNotFound";
+import HomePage from "./pages/HomePage";
 
 
 const App = () => {
+    const location = useLocation();
     const [open, setOpen] = useState(false);
     const data = useContext(ThemeContext);
     const theme = createMuiTheme({
@@ -26,9 +28,13 @@ const App = () => {
     return (
         <ThemeProvider theme={theme}>
             <Paper>
-                <CustomAppBar setOpen={setOpen}/>
+                {location.pathname !== '/' ? <CustomAppBar setOpen={setOpen}/> : null}
                 <LeftDrawer open={open} setOpen={setOpen}/>
                 <Switch>
+                    <Route exact path='/' component={HomePage}/>
+                    <Route exact path='/app'>
+                        <Redirect to="/login"/>
+                    </Route>
                     <Route exact path='/login' component={LoginPage}/>
                     <Route exact path='/reset/password' component={ResetPasswordPage}/>
                     <ProtectedRoute exact path='/tasks/:listName' component={TasksPage}/>

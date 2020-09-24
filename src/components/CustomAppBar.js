@@ -11,6 +11,7 @@ import {AuthContext} from "../context/Provider";
 import {ThemeContext} from "../context/ThemeProvider";
 import Sun from '@material-ui/icons/Brightness7Rounded';
 import Moon from '@material-ui/icons/Brightness2Rounded';
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
+        cursor: 'pointer',
     },
     moon: {
         color: 'white'
@@ -28,11 +30,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CustomAppBar = ({setOpen}) => {
+    const history = useHistory();
     const {currentUser} = useContext(AuthContext);
     const data = useContext(ThemeContext);
     const classes = useStyles();
     const logoutHandler = () => {
         app.auth().signOut().catch(e => alert(e));
+        history.push('/login')
+
     }
     const createAccountHandler = () => {
         alert('Currently we do not accept new users, if you really want to try out application please drop a mail at gthakur581@gmail.com')
@@ -44,7 +49,8 @@ const CustomAppBar = ({setOpen}) => {
                                            color="inherit" aria-label="menu">
                     <MenuIcon/>
                 </IconButton> : null}
-                <Typography style={{cursor: 'pointer'}} variant="h6" className={classes.title}>
+                <Typography onClick={() => history.push('/')} style={{cursor: 'pointer'}} variant="h6"
+                            className={classes.title}>
                     CLister
                 </Typography>
                 <IconButton onClick={data.toggle}>

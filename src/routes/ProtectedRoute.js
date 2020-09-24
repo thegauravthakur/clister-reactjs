@@ -1,9 +1,13 @@
-import React, {useContext} from "react"
-import {Route, Redirect} from "react-router-dom";
+import React, {useContext, useEffect} from "react"
+import {Route, Redirect, useLocation} from "react-router-dom";
 import {AuthContext} from "../context/Provider";
 
 const ProtectedRoute = ({component: RouteComponent, ...rest}) => {
+    const location = useLocation();
     const {currentUser} = useContext(AuthContext);
+    useEffect(() => {
+        console.log(location.pathname);
+    }, [currentUser])
     return (
         <Route
             {...rest}
@@ -11,7 +15,8 @@ const ProtectedRoute = ({component: RouteComponent, ...rest}) => {
                 currentUser ? (
                     <RouteComponent {...routeProps} />
                 ) : (
-                    <Redirect to={"/login"}/>
+
+                    <Redirect to={location.pathname.length > 4 ? '/login' : '/'}/>
                 )
             }
         />
