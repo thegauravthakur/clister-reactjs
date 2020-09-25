@@ -2,6 +2,7 @@
 import React, {useContext, useState} from "react";
 import {createMuiTheme, ThemeProvider, Paper} from "@material-ui/core";
 import {Route, Switch, Redirect, useLocation} from "react-router-dom";
+import {Offline} from "react-detect-offline";
 //user made libraries
 import LoginPage from "./pages/LoginPage";
 import TasksPage from "./pages/TasksPage";
@@ -12,6 +13,7 @@ import LeftDrawer from "./components/LeftDrawer";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import PageNotFound from "./pages/PageNotFound";
 import HomePage from "./pages/HomePage";
+import Typography from "@material-ui/core/Typography";
 
 
 const App = () => {
@@ -23,7 +25,7 @@ const App = () => {
             palette: {
                 type: data.theme,
                 primary: {
-                    main:currentTheme.theme === 'light' ? '#3f50b5': '#1DA1F2',
+                    main: currentTheme.theme === 'light' ? '#3f50b5' : '#1DA1F2',
                 }
             },
         }
@@ -31,6 +33,14 @@ const App = () => {
 
     return (
         <ThemeProvider theme={theme}>
+            <Offline>
+                <div style={{backgroundColor: 'red'}}>
+                <Typography style={{color: 'white'}} align='center'>
+                    No Internet Connection
+                </Typography>
+            </div>
+            </Offline>
+
             <Paper>
                 {location.pathname !== '/' ? <CustomAppBar setOpen={setOpen}/> : null}
                 <LeftDrawer open={open} setOpen={setOpen}/>
@@ -48,6 +58,8 @@ const App = () => {
                     <Route component={PageNotFound}/>
                 </Switch>
             </Paper>
+
+
         </ThemeProvider>
     )
 }
