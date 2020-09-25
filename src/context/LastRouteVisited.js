@@ -2,9 +2,8 @@ import React, {useContext, useEffect, useState} from "react";
 import app from "../firebase/base";
 import {AuthContext} from "./Provider";
 import {useHistory} from "react-router-dom";
-import {Grid, Paper} from "@material-ui/core";
+import {Paper} from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Div100vh from 'react-div-100vh'
 import LinearProgress from "@material-ui/core/LinearProgress";
 
 export const LastRouteVisitedContext = React.createContext('');

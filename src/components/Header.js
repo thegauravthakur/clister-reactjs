@@ -1,15 +1,13 @@
-import React, {useContext, useState} from "react";
+import React from "react";
 import HomeAppBar from "./HomeAppBar";
-import {Button, Grid, Typography} from "@material-ui/core";
-import {ThemeContext} from "../context/ThemeProvider";
+import {Button, Typography} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import {useMediaQuery} from "@material-ui/core";
-import {makeStyles, useTheme} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import {use100vh} from 'react-div-100vh'
 import Typewriter from 'typewriter-effect';
 
 const Header = () => {
-    const [text, setText] = useState('')
     const height = use100vh();
     const useStyle = makeStyles((theme) => ({
         title: {
@@ -23,7 +21,7 @@ const Header = () => {
         image: {
 
             [theme.breakpoints.down('md')]: {
-                maxWidth: '60%',
+                maxWidth: '80%',
             },
             [theme.breakpoints.up('sm')]: {
                 maxWidth: '90%',
@@ -34,7 +32,6 @@ const Header = () => {
         }
     }))
     const classes = useStyle();
-    const theme = useTheme();
     const matches = useMediaQuery(theme => theme.breakpoints.up('sm'));
     // const matches2 = useMediaQuery(theme => theme.breakpoint.up('md'));
     const history = useHistory();
@@ -42,7 +39,7 @@ const Header = () => {
     return (
 
         <div style={{
-            height: height,
+            minHeight: height,
             display: "flex",
             flexDirection: 'column',
             justifyContent: 'space-between',

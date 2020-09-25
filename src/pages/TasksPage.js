@@ -4,7 +4,7 @@ import Title from "../components/Title";
 import ListView from "../components/ListView";
 import {makeStyles} from "@material-ui/core/styles";
 import {ThemeContext} from "../context/ThemeProvider";
-import {useParams, useHistory} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {CurrentListTileContext} from "../context/CurrentListTileProvider";
 import { use100vh } from 'react-div-100vh'
 const TasksPage = () => {

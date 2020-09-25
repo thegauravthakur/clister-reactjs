@@ -5,11 +5,9 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import DataUsageRoundedIcon from '@material-ui/icons/DataUsageRounded';
-import CustomCard from "./CustomCard";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
@@ -35,15 +33,21 @@ const LeftDrawer = ({open, setOpen}) => {
     };
     const [message, setMessage] = useState('');
     useEffect(() => {
+        let check = true;
         if (currentUser) {
             let temp = [];
             const ref = app.firestore().collection(currentUser.uid).get();
             ref.then((data) => data.docs.forEach((d) => temp.push(d['id']))).then(() => {
-                setList(temp);
-                console.log(list)
+                if (check){
+                    setList(temp);
+                    console.log(list)
+                }
+
             })
         }
-
+        return () => {
+            check = false
+        }
     }, [currentUser])
 
     const onDeleteHandler = (documentName) => {

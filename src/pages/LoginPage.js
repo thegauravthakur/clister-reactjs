@@ -20,7 +20,6 @@ import Paper from "@material-ui/core/Paper";
 import {ThemeContext} from "../context/ThemeProvider";
 import Box from "@material-ui/core/Box";
 import {use100vh} from 'react-div-100vh'
-import {LastRouteVisitedContext} from "../context/LastRouteVisited";
 
 function Copyright() {
     return (
@@ -41,7 +40,6 @@ const LoginPage = ({history}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const routeData = useContext(LastRouteVisitedContext);
     const [open, setOpen] = useState({
         isOpen: false,
         message: '',

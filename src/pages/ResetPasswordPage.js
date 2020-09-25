@@ -38,7 +38,6 @@ const ResetPasswordPage = ({history}) => {
     const height = use100vh()
     const data = useContext(ThemeContext);
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState({
         isOpen: false,

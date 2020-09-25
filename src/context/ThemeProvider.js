@@ -7,7 +7,8 @@ export const MyThemeProvider = ({children}) => {
         <ThemeContext.Provider
             value={{
                 theme: themeType,
-                toggle: () => setThemeType(themeType === 'dark' ? 'light' : 'dark')
+                toggle: () => setThemeType(themeType === 'dark' ? 'light' : 'dark'),
+                setTheme: (th) => setThemeType(th),
             }}
         >
             {children}

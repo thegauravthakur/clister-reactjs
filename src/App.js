@@ -15,12 +15,16 @@ import HomePage from "./pages/HomePage";
 
 
 const App = () => {
+    const currentTheme = useContext(ThemeContext);
     const location = useLocation();
     const [open, setOpen] = useState(false);
     const data = useContext(ThemeContext);
     const theme = createMuiTheme({
             palette: {
                 type: data.theme,
+                primary: {
+                    main:currentTheme.theme === 'light' ? '#3f50b5': '#1DA1F2',
+                }
             },
         }
     )

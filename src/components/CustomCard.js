@@ -28,7 +28,7 @@ const CustomCard = ({onDeleteHandler, body, index, pprops}) => {
     })))
     const classes = useStyle();
     return (
-        <Paper {...pprops} className={classes.root} elevation={3}>
+        <Paper key={body} {...pprops} className={classes.root} elevation={3}>
             <Grid
                 container direction="row">
                 <Grid alignItems='center' justify='center' container xs={1} sm={1} item>

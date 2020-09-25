@@ -45,15 +45,17 @@ const ListView = ({listName}) => {
         })
     }
     useEffect(() => {
+        let check = true;
         const ref = app.firestore().collection(currentUser.uid).doc(`${listName}`)
         ref.onSnapshot(docSnapshot => {
-            if (docSnapshot.exists) {
+            if (docSnapshot.exists && check) {
                 let data = docSnapshot.data()
                 setList(data.task)
             }
         }, err => {
             console.log(`Encountered error: ${err}`);
         });
+        return () => {check = false}
 
     }, [listName])
 
@@ -76,7 +78,7 @@ const ListView = ({listName}) => {
 
                     }}
                     renderList={({children, props}) => <div {...props}>{children}</div>}
-                    renderItem={({index, value, props}) => <CustomCard pprops={props} index={index} body={value}
+                    renderItem={({index, value, props}) => <CustomCard key={value} pprops={props} index={index} body={value}
                                                                        onDeleteHandler={(index) => onDeleteHandler(index)}/>}
                 /> :
                 <EmptyImageComponent/>}
