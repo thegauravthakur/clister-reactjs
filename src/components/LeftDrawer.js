@@ -82,7 +82,6 @@ const LeftDrawer = ({open, setOpen}) => {
                         margin="dense"
                         id="name"
                         label="Enter List Name"
-                        type="email"
                         fullWidth
                     />
                 </DialogContent>
