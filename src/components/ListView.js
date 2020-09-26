@@ -32,6 +32,16 @@ const ListView = ({listName}) => {
 
     }
 
+    const onListEditHandler = (data, index) => {
+        let temp = [...list];
+        temp[index] = data;
+        setList(temp);
+        app.firestore().collection(currentUser.uid).doc(`${listName}`).set({task: temp}).then(() => {
+            // setSnackBarData({type: 'success', message: 'item added!', open: true})
+        })
+        currentEditList.toggle(listName);
+    }
+
     const onDeleteHandler = (index) => {
         let temp = [...list]
         temp.splice(index, 1)
@@ -78,7 +88,7 @@ const ListView = ({listName}) => {
 
                     }}
                     renderList={({children, props}) => <div {...props}>{children}</div>}
-                    renderItem={({index, value, props}) => <CustomCard key={value} pprops={props} index={index} body={value}
+                    renderItem={({index, value, props}) => <CustomCard currentUser={currentUser} listName={listName} onSubmit={(data, ind) => onListEditHandler(data, ind)} key={value} pprops={props} index={index} body={value}
                                                                        onDeleteHandler={(index) => onDeleteHandler(index)}/>}
                 /> :
                 <EmptyImageComponent/>}
