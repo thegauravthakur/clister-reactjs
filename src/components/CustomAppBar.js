@@ -11,7 +11,7 @@ import {AuthContext} from "../context/Provider";
 import {ThemeContext} from "../context/ThemeProvider";
 import Sun from '@material-ui/icons/Brightness7Rounded';
 import Moon from '@material-ui/icons/Brightness2Rounded';
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CustomAppBar = ({setOpen}) => {
+    const location = useLocation();
     const history = useHistory();
     const {currentUser} = useContext(AuthContext);
     const data = useContext(ThemeContext);
@@ -40,7 +41,10 @@ const CustomAppBar = ({setOpen}) => {
 
     }
     const createAccountHandler = () => {
-        alert('Currently we do not accept new users, if you really want to try out application please drop a mail at gthakur581@gmail.com')
+        history.push('/signup')
+    }
+    const loginHandler = () => {
+        history.push('/login')
     }
     return (
         <AppBar position="static" color={data.theme === 'dark' ? 'default' : 'primary'}>
@@ -57,7 +61,7 @@ const CustomAppBar = ({setOpen}) => {
                     {data.theme === 'dark' ? <Sun/> : <Moon className={classes.moon}/>}
                 </IconButton>
                 {currentUser ? <Button onClick={logoutHandler} color="inherit">Logout</Button> :
-                    <Button onClick={createAccountHandler} color="inherit">Create Account</Button>}
+                    location.pathname === '/signup'?<Button onClick={loginHandler} color='inherit'>Login</Button>:<Button onClick={createAccountHandler} color="inherit">Create Account</Button>}
             </Toolbar>
         </AppBar>
     )

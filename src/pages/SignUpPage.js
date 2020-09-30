@@ -34,12 +34,11 @@ function Copyright() {
     );
 }
 
-const LoginPage = ({history}) => {
+const SignUpPage = ({history}) => {
     const height = use100vh()
     const data = useContext(ThemeContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [capcha, setcapcha] = useState(false);
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState({
         isOpen: false,
@@ -78,26 +77,19 @@ const LoginPage = ({history}) => {
     }));
     const onSubmitHandler = event => {
         event.preventDefault();
-        if (!capcha) {
-            setOpen({
-                isOpen: true,
-                message: 'Captcha not verified!',
-                type: 'error',
-            })
-        } else {
-            setLoading(true);
-            app.auth().signInWithEmailAndPassword(email, password).then(() => {
+        setLoading(true);
+        app.auth().createUserWithEmailAndPassword(email, password)
+            .then(() => {
+                app.auth().signOut();
                 setLoading(false);
             }).catch(e => {
-                setLoading(false);
-                setOpen({
-                    isOpen: true,
-                    message: e.message,
-                    type: 'error'
-                });
+            setLoading(false);
+            setOpen({
+                isOpen: true,
+                message: e.message,
+                type: 'error'
             });
-        }
-
+        });
 
     }
     const handleClose = () => {
@@ -119,17 +111,17 @@ const LoginPage = ({history}) => {
                         <Avatar className={classes.icon}>
                             <LockOutlinedIcon/>
                         </Avatar>
-                        <Typography variant='h5' className={classes.title}>Login</Typography>
+                        <Typography variant='h5' className={classes.title}>Create Account</Typography>
                         <form onSubmit={onSubmitHandler}>
                             <TextField autoComplete='email' type='email' required autoFocus margin='normal'
                                        fullWidth label='Email Address'
                                        variant='outlined' onChange={(e) => setEmail(e.target.value)}/>
-                            <TextField autoComplete="current-password" required margin='normal' fullWidth
+                            <TextField required margin='normal' fullWidth
                                        label='Password' variant='outlined'
                                        type='password' onChange={(e) => setPassword(e.target.value)}/>
                             <Button disabled={loading} type='submit' className={classes.submit} fullWidth
                                     variant="contained" color="primary">
-                                Sign In
+                                Sign Up
                             </Button>
                             <Grid container justify='space-between'>
                                 <Grid item>
@@ -156,4 +148,4 @@ const LoginPage = ({history}) => {
     )
 }
 
-export default LoginPage;
+export default SignUpPage;

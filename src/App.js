@@ -14,6 +14,7 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import PageNotFound from "./pages/PageNotFound";
 import HomePage from "./pages/HomePage";
 import Typography from "@material-ui/core/Typography";
+import SignUpPage from "./pages/SignUpPage";
 
 
 const App = () => {
@@ -35,10 +36,10 @@ const App = () => {
         <ThemeProvider theme={theme}>
             <Offline>
                 <div style={{backgroundColor: 'red'}}>
-                <Typography style={{color: 'white'}} align='center'>
-                    No Internet Connection
-                </Typography>
-            </div>
+                    <Typography style={{color: 'white'}} align='center'>
+                        No Internet Connection
+                    </Typography>
+                </div>
             </Offline>
 
             <Paper>
@@ -50,6 +51,7 @@ const App = () => {
                         <Redirect to="/login"/>
                     </Route>
                     <Route exact path='/login' component={LoginPage}/>
+                    <Route exact path='/signup' component={SignUpPage}/>
                     <Route exact path='/reset/password' component={ResetPasswordPage}/>
                     <ProtectedRoute exact path='/tasks/:listName' component={TasksPage}/>
                     <ProtectedRoute exact path="/">
