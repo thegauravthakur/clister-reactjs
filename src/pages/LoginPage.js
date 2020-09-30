@@ -39,7 +39,6 @@ const LoginPage = ({history}) => {
     const data = useContext(ThemeContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [capcha, setcapcha] = useState(false);
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState({
         isOpen: false,
@@ -78,26 +77,17 @@ const LoginPage = ({history}) => {
     }));
     const onSubmitHandler = event => {
         event.preventDefault();
-        if (!capcha) {
+        setLoading(true);
+        app.auth().signInWithEmailAndPassword(email, password).then(() => {
+            setLoading(false);
+        }).catch(e => {
+            setLoading(false);
             setOpen({
                 isOpen: true,
-                message: 'Captcha not verified!',
-                type: 'error',
-            })
-        } else {
-            setLoading(true);
-            app.auth().signInWithEmailAndPassword(email, password).then(() => {
-                setLoading(false);
-            }).catch(e => {
-                setLoading(false);
-                setOpen({
-                    isOpen: true,
-                    message: e.message,
-                    type: 'error'
-                });
+                message: e.message,
+                type: 'error'
             });
-        }
-
+        });
 
     }
     const handleClose = () => {
