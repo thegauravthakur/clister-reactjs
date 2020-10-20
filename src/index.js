@@ -7,18 +7,15 @@ import App from './App';
 import {AuthProvider} from "./context/Provider";
 import {MyThemeProvider} from "./context/ThemeProvider";
 import {CustomListTileProvider} from "./context/CurrentListTileProvider";
-import {LastRouteVisitedProvider} from "./context/LastRouteVisited";
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
     <BrowserRouter>
         <AuthProvider>
             <MyThemeProvider>
-                <LastRouteVisitedProvider>
                     <CustomListTileProvider>
                         <App/>
                     </CustomListTileProvider>
-                </LastRouteVisitedProvider>
             </MyThemeProvider>
         </AuthProvider>
     </BrowserRouter>,

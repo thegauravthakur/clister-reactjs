@@ -16,7 +16,6 @@ import app from "../firebase/base";
 import {AuthContext} from "../context/Provider";
 import CustomListItem from "./CustomListItem";
 import {CurrentListTileContext} from "../context/CurrentListTileProvider";
-import {LastRouteVisitedContext} from "../context/LastRouteVisited";
 
 const LeftDrawer = ({open, setOpen}) => {
     const [list, setList] = useState([]);
@@ -24,7 +23,6 @@ const LeftDrawer = ({open, setOpen}) => {
     const history = useHistory();
     const [dopen, setDopen] = useState(false);
     const {currentUser} = useContext(AuthContext);
-    const currentListEdit = useContext(LastRouteVisitedContext);
     const toggleDrawer = (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
@@ -59,8 +57,6 @@ const LeftDrawer = ({open, setOpen}) => {
             setList(temp);
             console.log('document name', documentName);
             console.log('user uid', currentUser.uid);
-            if (currentListEdit.route === documentName)
-                currentListEdit.toggle('default');
             app.firestore().collection(currentUser.uid).doc(documentName).delete().then(function () {
                 console.log("Document successfully deleted!");
             }).catch(function (error) {
@@ -93,7 +89,6 @@ const LeftDrawer = ({open, setOpen}) => {
                         let temp = [...list, message];
                         app.firestore().collection(currentUser.uid).doc(message).set({task: []}, {merge: true}).then()
                         setList(temp);
-                        currentListEdit.toggle(message);
                         history.push(`/tasks/${message}`)
                         currentListTile.toggle(message);
                         setOpen(false);

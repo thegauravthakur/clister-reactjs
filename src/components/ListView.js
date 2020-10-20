@@ -3,7 +3,6 @@ import {List} from "react-movable";
 import app from "../firebase/base";
 import CustomInputField from "./CustomInputField";
 import CustomCard from "./CustomCard";
-import {LastRouteVisitedContext} from "../context/LastRouteVisited";
 import {AuthContext} from "../context/Provider";
 import SnackBarBottom from "./SnackBarBottom";
 import EmptyImageComponent from "./EmptyImageComponent";
@@ -13,7 +12,6 @@ const ListView = ({listName}) => {
     const [list, setList] = useState([]);
     const [snackBarData, setSnackBarData] = useState({open: false, type: '', message: '',});
 
-    const currentEditList = useContext(LastRouteVisitedContext);
     const onFormSubmitHandler = (data) => {
         if (data === '') {
             setSnackBarData({
@@ -27,7 +25,6 @@ const ListView = ({listName}) => {
             app.firestore().collection(currentUser.uid).doc(`${listName}`).set({task: temp}).then(() => {
                 setSnackBarData({type: 'success', message: 'item added!', open: true})
             })
-            currentEditList.toggle(listName);
         }
 
     }
@@ -39,7 +36,6 @@ const ListView = ({listName}) => {
         app.firestore().collection(currentUser.uid).doc(`${listName}`).set({task: temp}).then(() => {
             // setSnackBarData({type: 'success', message: 'item added!', open: true})
         })
-        currentEditList.toggle(listName);
     }
 
     const onDeleteHandler = (index) => {

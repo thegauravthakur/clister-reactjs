@@ -15,7 +15,6 @@ export const AuthProvider = ({children}) => {
         return (
             <div style={{backgroundColor: 'black', minHeight: '100vh'}}>
                 <LinearProgress  color="secondary" />
-
             </div>
 
         )
