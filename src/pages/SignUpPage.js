@@ -20,6 +20,7 @@ import Paper from "@material-ui/core/Paper";
 import {ThemeContext} from "../context/ThemeProvider";
 import Box from "@material-ui/core/Box";
 import {use100vh} from 'react-div-100vh'
+import Axios from 'axios';
 
 function Copyright() {
     return (
@@ -78,18 +79,54 @@ const SignUpPage = ({history}) => {
     const onSubmitHandler = event => {
         event.preventDefault();
         setLoading(true);
-        app.auth().createUserWithEmailAndPassword(email, password)
-            .then(() => {
-                app.auth().signOut();
-                setLoading(false);
-            }).catch(e => {
-            setLoading(false);
-            setOpen({
-                isOpen: true,
-                message: e.message,
-                type: 'error'
-            });
-        });
+        let randomFixedInteger = function (length) {
+            return Math.floor(
+              Math.pow(10, length - 1) +
+              Math.random() *
+              (Math.pow(10, length) - Math.pow(10, length - 1) - 1)
+            );
+        };
+        let otp = randomFixedInteger(6);
+        let options = {
+            method: "POST",
+            url: process.env.REACT_APP_API_URL,
+            headers: {
+                "content-type": process.env.REACT_APP_CONTENT_TYPE,
+                "x-rapidapi-host": process.env.REACT_APP_X_RAPIDAPI_HOST,
+                "x-rapidapi-key": process.env.REACT_APP_X_RAPIDAPI_KEY,
+            },
+            data: {
+                personalizations: [
+                    { to: [{ email: email }], subject: "Verify your email!" },
+                ],
+                from: { email: "no_reply@clister.tech" },
+                content: [{ type: "text/plain", value: `you otp is ${otp}` }],
+            },
+        };
+
+        Axios.request(options)
+          .then(function (response) {
+              setLoading(false);
+              history.push({
+                  pathname: "/signup/verify",
+                  state: { email, password, otp },
+              });
+              setOpen({
+                  isOpen: true,
+                  message: 'OTP Sent',
+                  type: 'success'
+              });
+              console.log("OTP SENT");
+          })
+          .catch(function (error) {
+              setOpen({
+                  isOpen: true,
+                  message: error.message,
+                  type: 'error'
+              });
+              setLoading(false);
+              console.error(error);
+          });
 
     }
     const handleClose = () => {
