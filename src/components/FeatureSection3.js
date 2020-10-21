@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-const FeaturesSection = () => {
+const FeaturesSection3 = () => {
   const useStyle = makeStyles((theme) => ({
     mobileImage: {
       [theme.breakpoints.down("md")]: {
@@ -31,7 +31,7 @@ const FeaturesSection = () => {
                   style={{ fontFamily: "Fredoka One, cursive" }}
                   variant={"h4"}
                 >
-                  Write Once, Sync Everywhere
+                  True Dark Mode Experience
                 </Typography>
               </Grid>
               <Grid item>
@@ -39,10 +39,10 @@ const FeaturesSection = () => {
                   align={"center"}
                   style={{ fontFamily: "Courier Prime, monospace" }}
                 >
-                  With CLister, you can access your account on any device. For
-                  Android device, we have an application. CLister also have a
-                  progressive web app which you can access on any device and
-                  install it as native application
+                  Who don't loves dark mode? With CLister, you get true dark
+                  mode experience. You can easily toggle between dark mode and
+                  light mode with just one click. If you have any amoled device
+                  with you, you gonna love the overall experience it provides.
                 </Typography>
               </Grid>
             </Grid>
@@ -52,7 +52,7 @@ const FeaturesSection = () => {
                 width={"100%"}
                 alt={"CLister with sync"}
                 src={
-                  "https://res.cloudinary.com/gauravthakur/image/upload/v1603286386/undraw_file_sync_ot38_iftbtv.svg"
+                  "https://res.cloudinary.com/gauravthakur/image/upload/v1603289614/undraw_dark_mode_2xam_ajplac.svg"
                 }
               />
             </Grid>
@@ -64,4 +64,4 @@ const FeaturesSection = () => {
   );
 };
 
-export default FeaturesSection;
+export default FeaturesSection3;

@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-const FeaturesSection = () => {
+const FeaturesSection2 = () => {
   const useStyle = makeStyles((theme) => ({
     mobileImage: {
       [theme.breakpoints.down("md")]: {
@@ -17,6 +17,16 @@ const FeaturesSection = () => {
         <Grid item md={2} />
         <Grid item md={8}>
           <Grid container>
+            <Grid item md xs={12}>
+              <img
+                className={styles.mobileImage}
+                width={"100%"}
+                alt={"CLister with sync"}
+                src={
+                  "https://res.cloudinary.com/gauravthakur/image/upload/v1603288867/undraw_Note_list_re_r4u9_uetkbs.svg"
+                }
+              />
+            </Grid>
             <Grid
               direction={"column"}
               item
@@ -31,7 +41,7 @@ const FeaturesSection = () => {
                   style={{ fontFamily: "Fredoka One, cursive" }}
                   variant={"h4"}
                 >
-                  Write Once, Sync Everywhere
+                  Simple and Straight Forward
                 </Typography>
               </Grid>
               <Grid item>
@@ -39,22 +49,12 @@ const FeaturesSection = () => {
                   align={"center"}
                   style={{ fontFamily: "Courier Prime, monospace" }}
                 >
-                  With CLister, you can access your account on any device. For
-                  Android device, we have an application. CLister also have a
-                  progressive web app which you can access on any device and
-                  install it as native application
+                  While building CLister, clean user interface was our one of
+                  the main goal. We have build CLister by keeping the Google's
+                  Material UI guidelines in mind. CLister is easy to use. Even a
+                  5 y/o can use it.
                 </Typography>
               </Grid>
-            </Grid>
-            <Grid item md xs={12}>
-              <img
-                className={styles.mobileImage}
-                width={"100%"}
-                alt={"CLister with sync"}
-                src={
-                  "https://res.cloudinary.com/gauravthakur/image/upload/v1603286386/undraw_file_sync_ot38_iftbtv.svg"
-                }
-              />
             </Grid>
           </Grid>
         </Grid>
@@ -64,4 +64,4 @@ const FeaturesSection = () => {
   );
 };
 
-export default FeaturesSection;
+export default FeaturesSection2;
