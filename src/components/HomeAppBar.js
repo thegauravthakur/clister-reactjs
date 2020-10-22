@@ -15,6 +15,11 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     cursor: "pointer",
   },
+  btn: {
+    "&:hover": {
+      borderColor: "teal",
+    },
+  },
 }));
 const HomeAppBar = () => {
   const data = useContext(ThemeContext);
@@ -38,7 +43,12 @@ const HomeAppBar = () => {
         <Button onClick={() => history.push("/login")} color="inherit">
           Login
         </Button>
-        <Button onClick={() => history.push("/signup")} color="inherit">
+        <Button
+          className={classes.btn}
+          variant={"outlined"}
+          onClick={() => history.push("/signup")}
+          color="inherit"
+        >
           Sign Up
         </Button>
       </Toolbar>
