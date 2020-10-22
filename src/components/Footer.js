@@ -16,7 +16,7 @@ const Footer = () => {
           paddingBottom: "1rem",
         }}
       >
-        © 2020 Copyright: <Link>Gaurav Thakur</Link> | Made with{" "}
+        © 2020 Copyright: <Link>Gaurav Thakur</Link> | Made with
         <span style={{ color: "red", fontSize: "22px" }}>❤</span> in India
       </Typography>
     </Paper>

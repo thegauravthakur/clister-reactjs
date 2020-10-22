@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const FeaturesSection2 = () => {
   const useStyle = makeStyles((theme) => ({
@@ -10,9 +12,16 @@ const FeaturesSection2 = () => {
       },
     },
   }));
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+  });
   const styles = useStyle();
   return (
-    <div>
+    <motion.div
+      ref={ref}
+      animate={{ opacity: inView ? 1 : 0 }}
+      transition={{ duration: 1 }}
+    >
       <Grid container style={{ marginTop: "100px" }}>
         <Grid item md={2} />
         <Grid item md={8}>
@@ -60,7 +69,7 @@ const FeaturesSection2 = () => {
         </Grid>
         <Grid item md={2} />
       </Grid>
-    </div>
+    </motion.div>
   );
 };
 
