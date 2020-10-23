@@ -1,7 +1,6 @@
 import React from "react";
 import HomeAppBar from "./HomeAppBar";
-import { Button, Typography } from "@material-ui/core";
-import { Link, useHistory } from "react-router-dom";
+import { Typography } from "@material-ui/core";
 import { useMediaQuery } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { use100vh } from "react-div-100vh";

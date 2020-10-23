@@ -11,13 +11,13 @@ import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <BrowserRouter>
-    <AuthProvider>
-      <MyThemeProvider>
+    <MyThemeProvider>
+      <AuthProvider>
         <CustomListTileProvider>
           <App />
         </CustomListTileProvider>
-      </MyThemeProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </MyThemeProvider>
   </BrowserRouter>,
   document.getElementById("root")
 );

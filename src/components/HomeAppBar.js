@@ -22,14 +22,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const HomeAppBar = () => {
-  const data = useContext(ThemeContext);
   const classes = useStyles();
   const history = useHistory();
   return (
-    <AppBar
-      color={data.theme === "dark" ? "default" : "primary"}
-      position="static"
-    >
+    <AppBar color={"default"} position="static">
       <Toolbar>
         <Typography
           onClick={() => {
