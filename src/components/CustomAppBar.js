@@ -36,6 +36,7 @@ const CustomAppBar = ({ setOpen }) => {
   const data = useContext(ThemeContext);
   const classes = useStyles();
   const logoutHandler = () => {
+    localStorage.clear();
     app
       .auth()
       .signOut()
