@@ -47,7 +47,10 @@ const LeftDrawer = ({ open, setOpen }) => {
   };
   const [message, setMessage] = useState("");
   useEffect(() => {
-    const { displayName } = currentUser;
+    let displayName = null;
+    if (currentUser) {
+      displayName = currentUser.displayName;
+    }
     if (displayName === null) setProfileName("name");
     else setProfileName(displayName);
     let check = true;

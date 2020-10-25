@@ -45,7 +45,10 @@ const App = () => {
         {location.pathname !== "/" ? <CustomAppBar setOpen={setOpen} /> : null}
         <LeftDrawer open={open} setOpen={setOpen} />
         <Switch>
-          <Route exact path="/" component={HomePage} />
+          {/*<Route exact path="/" component={HomePage} />*/}
+          <Route exact path="/">
+            <Redirect to="/login" />
+          </Route>
           <Route exact path="/app">
             <Redirect to="/login" />
           </Route>
@@ -54,13 +57,13 @@ const App = () => {
           <Route exact path="/signup" component={SignUpPage} />
           <Route exact path="/reset/password" component={ResetPasswordPage} />
           <ProtectedRoute exact path="/tasks/:listName" component={TasksPage} />
-          <ProtectedRoute exact path="/">
-            {listName === undefined ? (
-              <Redirect to={"/tasks/default"} />
-            ) : (
-              <Redirect to={`tasks/${listName}`} />
-            )}
-          </ProtectedRoute>
+          {/*<ProtectedRoute exact path="/">*/}
+          {/*  {listName === undefined ? (*/}
+          {/*    <Redirect to={"/tasks/default"} />*/}
+          {/*  ) : (*/}
+          {/*    <Redirect to={`tasks/${listName}`} />*/}
+          {/*  )}*/}
+          {/*</ProtectedRoute>*/}
           <Route component={PageNotFound} />
         </Switch>
       </Paper>
