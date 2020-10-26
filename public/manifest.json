@@ -4,7 +4,7 @@
     "background_color": "#225560",
     "display": "standalone",
     "scope": "/",
-    "start_url": "/app",
+    "start_url": "/",
     "app_name": "CLister",
     "short_name": "CLister",
     "description": "CLister is a clean listing app.",

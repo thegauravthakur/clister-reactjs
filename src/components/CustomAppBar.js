@@ -66,14 +66,15 @@ const CustomAppBar = ({ setOpen }) => {
             <MenuIcon />
           </IconButton>
         ) : null}
-        <Typography
-          onClick={() => history.push("/")}
-          style={{ cursor: "pointer" }}
-          variant="h6"
+        <a
           className={classes.title}
+          style={{ textDecoration: "none", color: "inherit" }}
+          href={"https://clister.in"}
         >
-          CLister
-        </Typography>
+          <Typography style={{ cursor: "pointer" }} variant="h6">
+            C-LISTER
+          </Typography>
+        </a>
         <IconButton
           onClick={() => {
             data.toggle();
