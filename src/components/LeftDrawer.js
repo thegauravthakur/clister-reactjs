@@ -146,7 +146,7 @@ const LeftDrawer = ({ open, setOpen }) => {
             borderRadius: "100px",
             marginTop: "30px",
           }}
-          email="gthakur581@gmail.com"
+          email={currentUser ? currentUser.email : ""}
           size={150}
         />
         <Grid

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   Grid,
   Card,
@@ -21,6 +21,7 @@ import { ThemeContext } from "../context/ThemeProvider";
 import Box from "@material-ui/core/Box";
 import { use100vh } from "react-div-100vh";
 import ProtectedRoute from "../routes/ProtectedRoute";
+import ReCAPTCHA from "react-google-recaptcha";
 
 function Copyright() {
   return (
@@ -76,6 +77,7 @@ const LoginPage = ({ history }) => {
       margin: theme.spacing(3, 0, 2),
     },
   }));
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
     setLoading(true);
@@ -102,6 +104,9 @@ const LoginPage = ({ history }) => {
   const listName = localStorage.listName;
   const classes = useStyles();
   const { currentUser } = useContext(AuthContext);
+  const [secure, setSecure] = useState(false);
+  const captchaRef = useRef();
+
   if (currentUser) {
     if (listName === undefined) return <Redirect to={"/tasks/default"} />;
     else return <Redirect to={`tasks/${listName}`} />;
@@ -151,8 +156,20 @@ const LoginPage = ({ history }) => {
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
               />
+
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <div style={{}}>
+                  <ReCAPTCHA
+                    ref={captchaRef}
+                    theme={data.theme}
+                    sitekey={process.env.REACT_APP_SITE_KEY}
+                    onChange={(e) => setSecure(!secure)}
+                  />
+                </div>
+              </div>
+
               <Button
-                disabled={loading}
+                disabled={loading || !secure}
                 type="submit"
                 className={classes.submit}
                 fullWidth
@@ -161,6 +178,7 @@ const LoginPage = ({ history }) => {
               >
                 Sign In
               </Button>
+
               <Grid container justify="space-between">
                 <Grid item>
                   <Link

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import {
   Grid,
   Card,
@@ -21,6 +21,8 @@ import { ThemeContext } from "../context/ThemeProvider";
 import Box from "@material-ui/core/Box";
 import { use100vh } from "react-div-100vh";
 import Axios from "axios";
+import emailjs from "emailjs-com";
+import ReCAPTCHA from "react-google-recaptcha";
 
 function Copyright() {
   return (
@@ -41,6 +43,8 @@ const SignUpPage = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [secure, setSecure] = useState(false);
+  const captchaRef = useRef();
   const [open, setOpen] = useState({
     isOpen: false,
     message: "",
@@ -86,46 +90,83 @@ const SignUpPage = ({ history }) => {
       );
     };
     let otp = randomFixedInteger(6);
-    let options = {
-      method: "POST",
-      url: process.env.REACT_APP_API_URL,
-      headers: {
-        "content-type": process.env.REACT_APP_CONTENT_TYPE,
-        "x-rapidapi-host": process.env.REACT_APP_X_RAPIDAPI_HOST,
-        "x-rapidapi-key": process.env.REACT_APP_X_RAPIDAPI_KEY,
-      },
-      data: {
-        personalizations: [
-          { to: [{ email: email }], subject: "Verify your email!" },
-        ],
-        from: { email: "no_reply@clister.tech" },
-        content: [{ type: "text/plain", value: `you otp is ${otp}` }],
-      },
+    const templateParams = {
+      otp,
+      to_email: email,
     };
+    emailjs
+      .send(
+        "default_service",
+        process.env.REACT_APP_TEMP_ID,
+        templateParams,
+        process.env.REACT_APP_USER_ID
+      )
+      .then(
+        (response) => {
+          setLoading(false);
+          history.push({
+            pathname: "/signup/verify",
+            state: { email, password, otp },
+          });
+          setOpen({
+            isOpen: true,
+            message: "OTP Sent",
+            type: "success",
+          });
+          console.log("OTP SENT");
+          console.log("SUCCESS!", response.status, response.text);
+        },
+        (err) => {
+          setOpen({
+            isOpen: true,
+            message: err.message,
+            type: "error",
+          });
+          setLoading(false);
+          console.error(err);
+          console.log("FAILED...", err);
+        }
+      );
+    // let options = {
+    //   method: "POST",
+    //   url: process.env.REACT_APP_API_URL,
+    //   headers: {
+    //     "content-type": process.env.REACT_APP_CONTENT_TYPE,
+    //     "x-rapidapi-host": process.env.REACT_APP_X_RAPIDAPI_HOST,
+    //     "x-rapidapi-key": process.env.REACT_APP_X_RAPIDAPI_KEY,
+    //   },
+    //   data: {
+    //     personalizations: [
+    //       { to: [{ email: email }], subject: "Verify your email!" },
+    //     ],
+    //     from: { email: "no_reply@clister.tech" },
+    //     content: [{ type: "text/plain", value: `you otp is ${otp}` }],
+    //   },
+    // };
 
-    Axios.request(options)
-      .then(function (response) {
-        setLoading(false);
-        history.push({
-          pathname: "/signup/verify",
-          state: { email, password, otp },
-        });
-        setOpen({
-          isOpen: true,
-          message: "OTP Sent",
-          type: "success",
-        });
-        console.log("OTP SENT");
-      })
-      .catch(function (error) {
-        setOpen({
-          isOpen: true,
-          message: error.message,
-          type: "error",
-        });
-        setLoading(false);
-        console.error(error);
-      });
+    // Axios.request(options)
+    //   .then(function (response) {
+    //     setLoading(false);
+    //     history.push({
+    //       pathname: "/signup/verify",
+    //       state: { email, password, otp },
+    //     });
+    //     setOpen({
+    //       isOpen: true,
+    //       message: "OTP Sent",
+    //       type: "success",
+    //     });
+    //     console.log("OTP SENT");
+    //   })
+    //   .catch(function (error) {
+    //     setOpen({
+    //       isOpen: true,
+    //       message: error.message,
+    //       type: "error",
+    //     });
+    //     setLoading(false);
+    //     console.error(error);
+    //   });
   };
   const handleClose = () => {
     setOpen({
@@ -184,8 +225,19 @@ const SignUpPage = ({ history }) => {
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <div style={{}}>
+                  <ReCAPTCHA
+                    ref={captchaRef}
+                    theme={data.theme}
+                    sitekey={process.env.REACT_APP_SITE_KEY}
+                    onChange={(e) => setSecure(!secure)}
+                  />
+                </div>
+              </div>
+
               <Button
-                disabled={loading}
+                disabled={loading || !secure}
                 type="submit"
                 className={classes.submit}
                 fullWidth

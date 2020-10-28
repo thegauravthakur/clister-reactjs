@@ -1,0 +1,5 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "in.clister.app.twa",
+                   "sha256_cert_fingerprints": ["C1:06:E9:15:45:98:A7:FE:76:BC:AD:3E:54:00:61:57:C6:40:34:F2:C8:B1:FF:47:70:91:2C:94:69:2F:3C:C1"] }
+    }]
