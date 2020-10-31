@@ -127,46 +127,6 @@ const SignUpPage = ({ history }) => {
           console.log("FAILED...", err);
         }
       );
-    // let options = {
-    //   method: "POST",
-    //   url: process.env.REACT_APP_API_URL,
-    //   headers: {
-    //     "content-type": process.env.REACT_APP_CONTENT_TYPE,
-    //     "x-rapidapi-host": process.env.REACT_APP_X_RAPIDAPI_HOST,
-    //     "x-rapidapi-key": process.env.REACT_APP_X_RAPIDAPI_KEY,
-    //   },
-    //   data: {
-    //     personalizations: [
-    //       { to: [{ email: email }], subject: "Verify your email!" },
-    //     ],
-    //     from: { email: "no_reply@clister.tech" },
-    //     content: [{ type: "text/plain", value: `you otp is ${otp}` }],
-    //   },
-    // };
-
-    // Axios.request(options)
-    //   .then(function (response) {
-    //     setLoading(false);
-    //     history.push({
-    //       pathname: "/signup/verify",
-    //       state: { email, password, otp },
-    //     });
-    //     setOpen({
-    //       isOpen: true,
-    //       message: "OTP Sent",
-    //       type: "success",
-    //     });
-    //     console.log("OTP SENT");
-    //   })
-    //   .catch(function (error) {
-    //     setOpen({
-    //       isOpen: true,
-    //       message: error.message,
-    //       type: "error",
-    //     });
-    //     setLoading(false);
-    //     console.error(error);
-    //   });
   };
   const handleClose = () => {
     setOpen({
@@ -244,7 +204,7 @@ const SignUpPage = ({ history }) => {
                 variant="contained"
                 color="primary"
               >
-                Sign Up
+                {!secure ? "Click on the captcha" : "Sign In"}
               </Button>
               <Grid container justify="space-between">
                 <Grid item>

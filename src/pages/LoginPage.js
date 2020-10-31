@@ -176,7 +176,7 @@ const LoginPage = ({ history }) => {
                 variant="contained"
                 color="primary"
               >
-                Sign In
+                {!secure ? "Click on the captcha" : "Sign In"}
               </Button>
 
               <Grid container justify="space-between">

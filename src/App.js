@@ -1,5 +1,5 @@
 //external libraries
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { createMuiTheme, ThemeProvider, Paper } from "@material-ui/core";
 import { Route, Switch, Redirect, useLocation } from "react-router-dom";
 import { Offline } from "react-detect-offline";
@@ -30,7 +30,7 @@ const App = () => {
       },
     },
   });
-  const listName = localStorage.listName;
+
   return (
     <ThemeProvider theme={theme}>
       <Offline>
@@ -45,7 +45,6 @@ const App = () => {
         {location.pathname !== "/" ? <CustomAppBar setOpen={setOpen} /> : null}
         <LeftDrawer open={open} setOpen={setOpen} />
         <Switch>
-          {/*<Route exact path="/" component={HomePage} />*/}
           <Route exact path="/">
             <Redirect to="/login" />
           </Route>
@@ -57,13 +56,7 @@ const App = () => {
           <Route exact path="/signup" component={SignUpPage} />
           <Route exact path="/reset/password" component={ResetPasswordPage} />
           <ProtectedRoute exact path="/tasks/:listName" component={TasksPage} />
-          {/*<ProtectedRoute exact path="/">*/}
-          {/*  {listName === undefined ? (*/}
-          {/*    <Redirect to={"/tasks/default"} />*/}
-          {/*  ) : (*/}
-          {/*    <Redirect to={`tasks/${listName}`} />*/}
-          {/*  )}*/}
-          {/*</ProtectedRoute>*/}
+
           <Route component={PageNotFound} />
         </Switch>
       </Paper>
