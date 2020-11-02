@@ -35,6 +35,7 @@ const CustomCard = ({
     },
     message: {
       color: data.theme === "dark" ? "white" : "teal",
+      maxWidth: "100%",
     },
     index: {
       fontWeight: "bold",
@@ -91,7 +92,9 @@ const CustomCard = ({
               onFocus={(e) => e.target.select()}
             />
           ) : (
-            <Typography className={classes.message}>{body}</Typography>
+            <Typography className={classes.message} noWrap>
+              {body}
+            </Typography>
           )}
         </Grid>
         <Grid alignItems="center" container justify="center" xs={1} sm={1} item>
