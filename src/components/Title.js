@@ -17,12 +17,7 @@ const Title = ({ listName }) => {
   }));
   const classes = useStyle();
   return (
-    <Typography
-      onClick={() => localStorage.setItem("listName", listName)}
-      className={classes.title}
-      align="center"
-      variant="h3"
-    >
+    <Typography className={classes.title} align="center" variant="h3">
       {listName}
     </Typography>
   );
