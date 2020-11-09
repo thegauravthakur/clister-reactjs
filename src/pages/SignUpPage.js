@@ -106,7 +106,7 @@ const SignUpPage = ({ history }) => {
           });
           setOpen({
             isOpen: true,
-            message: "OTP Sent",
+            message: "OTP Sent!",
             type: "success",
           });
           console.log("OTP SENT");
