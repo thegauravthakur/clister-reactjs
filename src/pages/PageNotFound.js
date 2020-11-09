@@ -5,6 +5,7 @@ const PageNotFound = () => {
     return (
         <Typography style={{minHeight: '100vh'}} align='center' variant='h3'>
             404 | Page Not Found
+            
         </Typography>
     )
 }

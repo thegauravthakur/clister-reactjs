@@ -12,7 +12,6 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import app from "../firebase/base";
 import SnackBarBottom from "../components/SnackBarBottom";
 import { Redirect } from "react-router-dom";
 import { AuthContext } from "../context/Provider";
@@ -20,7 +19,6 @@ import Paper from "@material-ui/core/Paper";
 import { ThemeContext } from "../context/ThemeProvider";
 import Box from "@material-ui/core/Box";
 import { use100vh } from "react-div-100vh";
-import Axios from "axios";
 import emailjs from "emailjs-com";
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -30,13 +28,11 @@ function Copyright() {
       {"Copyright © "}
       <Link color="inherit" href="https://gauravthakur.me/">
         CLister
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
+      </Link>
+      }{new Date().getFullYear()}}
     </Typography>
   );
 }
-
 const SignUpPage = ({ history }) => {
   const height = use100vh();
   const data = useContext(ThemeContext);
@@ -204,7 +200,7 @@ const SignUpPage = ({ history }) => {
                 variant="contained"
                 color="primary"
               >
-                {!secure ? "Click on the captcha" : "Sign In"}
+                {!secure ? "Click on the captcha" : "Create Account"}
               </Button>
               <Grid container justify="space-between">
                 <Grid item>
