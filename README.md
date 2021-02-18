@@ -5,9 +5,12 @@
 C-Lister is an web/mobile app written in ReactJs and React Native. CLister will make you more organized and productive. You can manage all your related tasks in sections and create different sections for a different type of chores.
 
 ![CLister](https://i.ibb.co/s35sX3L/image.png)
+
 ![CLister](https://i.ibb.co/v3jFrwn/image.png)
 
-![enter image description here](https://i.ibb.co/j8vfNTY/unnamed.webp =300x)  ![enter image description here](https://i.ibb.co/1m0fL1T/unnamed-1.webp =300x)
+![enter image description here](https://i.ibb.co/j8vfNTY/unnamed.webp =300x) 
+
+![enter image description here](https://i.ibb.co/1m0fL1T/unnamed-1.webp =300x)
 
 ## Getting Started
 Follow these steps to start the project locally on your computer.
